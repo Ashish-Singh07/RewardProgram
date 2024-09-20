@@ -24,6 +24,7 @@ The reward program exposes the following API endpoints:
 - `GET  /transaction/month/{month}`: Fetches transaction by Month.
 - `GET  /transaction/allTransactions`: Gets list of all the transactions from the DB
 - `GET  /reward/month/{month}`: Gets reward for the total amount spend on transactions for the given month
+- `GET  /reward/totalRewards`: Gets reward for the total amount spend on all the transactions
 
 ## API Payloads
 

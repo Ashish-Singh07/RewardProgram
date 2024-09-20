@@ -19,4 +19,9 @@ public class RewardController {
     public Double getRewardsByMonth(@PathVariable int month) {
         return rewardService.getRewardByMonth(month);
     }
+
+    @GetMapping("/totalRewards")
+    public Double getTotalReward() {
+        return rewardService.getTotalReward();
+    }
 }

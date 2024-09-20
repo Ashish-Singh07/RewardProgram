@@ -19,32 +19,18 @@ public class RewardService {
         List<TransactionDTO> transactionByMonth = transactionService.getTransactionByMonth(month);
         return calculateReward(transactionByMonth);
     }
-
-    public Double calculateReward(List<TransactionDTO> transactionByMonth) throws ResponseStatusException {
-        Double reward = 0.0;
-        if (!transactionByMonth.isEmpty()) {
-            Double totalTransactionSum = transactionByMonth.stream().mapToDouble(TransactionDTO::getTransactionAmount).sum();
-            if(totalTransactionSum < 50){
-                reward = 0.0;
-            }
-            else if(totalTransactionSum >= 50 && totalTransactionSum < 100){
-                reward = (totalTransactionSum - 50);
-            }
-            else if(totalTransactionSum >= 100){
-                reward = (totalTransactionSum - 50) + (2*(totalTransactionSum - 100));
-            }
-        }
-        else{
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The month selected is not valid, please select a valid month");
-        }   
-
-        return reward;
+    
+    
+    public Double getTotalReward() {
+        List<TransactionDTO> allTransactions = transactionService.getAllTransactions();
+        return calculateReward(allTransactions);
     }
 
-    public Double calculateRewardByMonth(List<TransactionDTO> transactionByMonth) throws ResponseStatusException {
+
+    public Double calculateReward(List<TransactionDTO> transactions) throws ResponseStatusException {
         Double reward = 0.0;
-        if (!transactionByMonth.isEmpty()) {
-            Double totalTransactionSum = transactionByMonth.stream().mapToDouble(TransactionDTO::getTransactionAmount).sum();
+        if (!transactions.isEmpty()) {
+            Double totalTransactionSum = transactions.stream().mapToDouble(TransactionDTO::getTransactionAmount).sum();
             if(totalTransactionSum < 50){
                 reward = 0.0;
             }
@@ -57,8 +43,7 @@ public class RewardService {
         }
         else{
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The month selected is not valid, please select a valid month");
-        }   
-
+        }
         return reward;
     }
 }
