@@ -33,10 +33,10 @@ public class RewardController {
     @GetMapping("/forLast/{n}/{entity}")
     public Double getRewardsForDays(@PathVariable int n, @PathVariable String entity) {
         java.time.LocalDate startDate = switch (entity) {
-                case "days" -> java.time.LocalDate.now().minusDays(n);
-                case "weeks" -> java.time.LocalDate.now().minusWeeks(n);
-                case "months" -> java.time.LocalDate.now().minusMonths(n);
-                case "years" -> java.time.LocalDate.now().minusYears(n);
+                case "day" -> java.time.LocalDate.now().minusDays(n);
+                case "week" -> java.time.LocalDate.now().minusWeeks(n);
+                case "month" -> java.time.LocalDate.now().minusMonths(n);
+                case "year" -> java.time.LocalDate.now().minusYears(n);
                 default -> throw new ResponseStatusException(HttpStatus.BAD_REQUEST, INVALID_SEARCH_ENTITY_ERROR);
             };
         java.time.LocalDate endDate = java.time.LocalDate.now();
