@@ -2,6 +2,7 @@ package com.charter.retailer.reward.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,18 +21,18 @@ public class RewardController {
     RewardService rewardService;
     
     @GetMapping("/betweenDate")
-    public Double getRewardsBetweenDate(@RequestParam("startDate") java.time.LocalDate startDate, @RequestParam("endDate") java.time.LocalDate endDate) {
-        return rewardService.getRewardsBetweenDate(startDate, endDate);
+    public ResponseEntity<Double> getRewardsBetweenDate(@RequestParam("startDate") java.time.LocalDate startDate, @RequestParam("endDate") java.time.LocalDate endDate) {
+        return new ResponseEntity<>(rewardService.getRewardsBetweenDate(startDate, endDate), HttpStatus.OK);
     }
 
     @GetMapping("/fromDate")
-    public Double getRewardsFromDate(@RequestParam("startDate") java.time.LocalDate startDate) {
+    public ResponseEntity<Double> getRewardsFromDate(@RequestParam("startDate") java.time.LocalDate startDate) {
         java.time.LocalDate endDate = java.time.LocalDate.now();
-        return rewardService.getRewardsBetweenDate(startDate, endDate);
+        return new ResponseEntity<>(rewardService.getRewardsBetweenDate(startDate, endDate), HttpStatus.OK);
     }
 
     @GetMapping("/forLast/{n}/{entity}")
-    public Double getRewardsForDays(@PathVariable int n, @PathVariable String entity) {
+    public ResponseEntity<Double> getRewardsForDays(@PathVariable int n, @PathVariable String entity) {
         java.time.LocalDate startDate = switch (entity) {
                 case "day" -> java.time.LocalDate.now().minusDays(n);
                 case "week" -> java.time.LocalDate.now().minusWeeks(n);
@@ -40,11 +41,11 @@ public class RewardController {
                 default -> throw new ResponseStatusException(HttpStatus.BAD_REQUEST, INVALID_SEARCH_ENTITY_ERROR);
             };
         java.time.LocalDate endDate = java.time.LocalDate.now();
-        return rewardService.getRewardsBetweenDate(startDate, endDate);
+        return new ResponseEntity<>(rewardService.getRewardsBetweenDate(startDate, endDate), HttpStatus.OK);
     }
 
     @GetMapping("/totalRewards")
-    public Double getTotalReward() {
-        return rewardService.getTotalReward();
+    public ResponseEntity<Double> getTotalRewards() {
+        return new ResponseEntity<>(rewardService.getTotalReward(), HttpStatus.OK);
     }
 }

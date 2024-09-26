@@ -3,6 +3,8 @@ package com.charter.retailer.reward.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,34 +25,34 @@ public class TransactionController {
     TransactionService transactionService;
     
     @GetMapping("/allTransactions")
-    public List<TransactionDTO> getAllTransactions() {
-        return transactionService.getAllTransactions();
+    public ResponseEntity<List<TransactionDTO>> getAllTransactions() {
+        return new ResponseEntity<>(transactionService.getAllTransactions(), HttpStatus.OK);
     }
 
     @GetMapping("/id/{id}")
-    public TransactionDTO getTransactionById(@PathVariable Long id) {
-        return transactionService.getTransactionById(id);
+    public ResponseEntity<TransactionDTO> getTransactionById(@PathVariable Long id) {
+        return new ResponseEntity<>(transactionService.getTransactionById(id), HttpStatus.OK);
     }
     
     @GetMapping("/betweenDate")
-    public List<TransactionDTO> getTransactionsBetweenDate(@RequestParam("startDate") java.time.LocalDate startDate, @RequestParam("endDate") java.time.LocalDate endDate) {
-        return transactionService.getTransactionBetweenDate(startDate, endDate);
+    public ResponseEntity<List<TransactionDTO>> getTransactionsBetweenDate(@RequestParam("startDate") java.time.LocalDate startDate, @RequestParam("endDate") java.time.LocalDate endDate) {
+        return new ResponseEntity<>(transactionService.getTransactionBetweenDate(startDate, endDate), HttpStatus.OK);
     }
 
     @GetMapping("/fromDate")
-    public List<TransactionDTO> getTransactionsFromDate(@RequestParam("startDate") java.time.LocalDate startDate) {
+    public ResponseEntity<List<TransactionDTO>> getTransactionsFromDate(@RequestParam("startDate") java.time.LocalDate startDate) {
         java.time.LocalDate endDate = java.time.LocalDate.now();
-        return transactionService.getTransactionBetweenDate(startDate, endDate);
+        return new ResponseEntity<>(transactionService.getTransactionBetweenDate(startDate, endDate), HttpStatus.OK);
     }
 
     @PostMapping("/createTransaction")
-    public TransactionDTO createTransactions(@RequestBody TransactionDTO transactionDTO) {
-        return transactionService.createTransaction(transactionDTO);
+    public ResponseEntity<TransactionDTO> createTransaction(@RequestBody TransactionDTO transactionDTO) {
+        return new ResponseEntity<>(transactionService.createTransaction(transactionDTO), HttpStatus.CREATED);
     }
 
     @PostMapping("/createAllTransactions")
-    public List<TransactionDTO> createAllTransactions(@RequestBody List<TransactionDTO> transactionDTOs) {
-        return transactionService.createAllTransactions(transactionDTOs);
+    public ResponseEntity<List<TransactionDTO>> createAllTransactions(@RequestBody List<TransactionDTO> transactionDTOs) {
+        return new ResponseEntity<>(transactionService.createAllTransactions(transactionDTOs), HttpStatus.CREATED);
     }
 }
 
