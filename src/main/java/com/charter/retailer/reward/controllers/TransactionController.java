@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.charter.retailer.reward.dto.TransactionDTO;
@@ -31,9 +32,15 @@ public class TransactionController {
         return transactionService.getTransactionById(id);
     }
     
-    @GetMapping("/month/{month}")
-    public List<TransactionDTO> getTransactionsByMonth(@PathVariable Integer month) {
-        return transactionService.getTransactionByMonth(month);
+    @GetMapping("/betweenDate")
+    public List<TransactionDTO> getTransactionsBetweenDate(@RequestParam("startDate") java.time.LocalDate startDate, @RequestParam("endDate") java.time.LocalDate endDate) {
+        return transactionService.getTransactionBetweenDate(startDate, endDate);
+    }
+
+    @GetMapping("/fromDate")
+    public List<TransactionDTO> getTransactionsFromDate(@RequestParam("startDate") java.time.LocalDate startDate) {
+        java.time.LocalDate endDate = java.time.LocalDate.now();
+        return transactionService.getTransactionBetweenDate(startDate, endDate);
     }
 
     @PostMapping("/createTransaction")

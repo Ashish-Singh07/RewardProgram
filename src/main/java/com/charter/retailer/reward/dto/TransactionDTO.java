@@ -12,6 +12,5 @@ public class TransactionDTO {
     private Long id;
     private String transactionName;
     private Double transactionAmount;
-    private Integer transactionMonth;
-    private java.time.LocalDate transactionDate;
+    private java.time.LocalDate transactionDate; // Format: yyyy-MM-dd
 }

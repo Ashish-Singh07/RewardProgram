@@ -10,6 +10,5 @@ import com.charter.retailer.reward.entities.TransactionEntity;
 @Repository
 public interface TransactionRepository extends JpaRepository<TransactionEntity, Long> {
 
-    public List<TransactionEntity> findByTransactionMonth(int month);
-
+    public List<TransactionEntity> findByTransactionDateBetween(java.time.LocalDate startDate, java.time.LocalDate endDate);
 }

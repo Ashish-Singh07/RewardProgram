@@ -28,8 +28,8 @@ public class TransactionService {
         return modelMapper.map(transactionEntity, TransactionDTO.class);
     }
 
-    public List<TransactionDTO> getTransactionByMonth(int month) {
-        List<TransactionEntity> transactionEntities = transactionRepository.findByTransactionMonth(month);
+    public List<TransactionDTO> getTransactionBetweenDate(java.time.LocalDate startDate, java.time.LocalDate endDate) {
+        List<TransactionEntity> transactionEntities = transactionRepository.findByTransactionDateBetween(startDate, endDate);
         return transactionEntities.stream().map(entity -> modelMapper.map(entity, TransactionDTO.class)).toList();
     }
 

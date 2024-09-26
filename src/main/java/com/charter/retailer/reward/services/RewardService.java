@@ -8,19 +8,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.charter.retailer.reward.dto.TransactionDTO;
+import static com.charter.retailer.reward.util.RewardConstants.INVALID_TRANSACTION_DATE_ERROR;
 
 @Service
 public class RewardService {
 
     @Autowired
     TransactionService transactionService;
-
-    public Double getRewardByMonth(int month) {
-        List<TransactionDTO> transactionByMonth = transactionService.getTransactionByMonth(month);
-        return calculateReward(transactionByMonth);
+    
+    public Double getRewardsBetweenDate(java.time.LocalDate startDate, java.time.LocalDate endDate) {
+        List<TransactionDTO> transactionsBetweenDates = transactionService.getTransactionBetweenDate(startDate, endDate);
+        return calculateReward(transactionsBetweenDates);
     }
-    
-    
+
     public Double getTotalReward() {
         List<TransactionDTO> allTransactions = transactionService.getAllTransactions();
         return calculateReward(allTransactions);
@@ -42,7 +42,7 @@ public class RewardService {
             }
         }
         else{
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The month selected is not valid, please select a valid month");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, INVALID_TRANSACTION_DATE_ERROR);
         }
         return reward;
     }
