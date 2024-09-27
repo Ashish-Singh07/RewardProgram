@@ -8,17 +8,15 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import static org.mockito.Mockito.when;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.server.ResponseStatusException;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import com.charter.retailer.reward.dto.TransactionDTO;
+import com.charter.retailer.reward.exception.InvalidDatesException;
 
-@ExtendWith(MockitoExtension.class)
+@SpringBootTest
 public class RewardServiceTest {
 
     @Mock
@@ -75,9 +73,9 @@ public class RewardServiceTest {
     void testCalculateRewardEmptyTransactions() {
         // Arrange
         List<TransactionDTO> transactions = new ArrayList<>();
-
+        
         // Act and Assert
-        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> rewardService.calculateReward(transactions));
-        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
+        Throwable exception = assertThrows(Throwable.class, () -> rewardService.calculateReward(transactions));
+        assertEquals(InvalidDatesException.class, exception.getClass());
     }
 }

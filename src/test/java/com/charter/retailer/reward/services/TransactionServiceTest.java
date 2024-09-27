@@ -9,19 +9,18 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import static org.mockito.Mockito.when;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import com.charter.retailer.reward.dto.TransactionDTO;
 import com.charter.retailer.reward.entities.TransactionEntity;
 import com.charter.retailer.reward.exception.TransactionNotFoundException;
 import com.charter.retailer.reward.repositories.TransactionRepository;
 
-@ExtendWith(MockitoExtension.class)
+@SpringBootTest
 public class TransactionServiceTest {
 
     @Mock
