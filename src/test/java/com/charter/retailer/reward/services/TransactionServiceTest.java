@@ -15,11 +15,10 @@ import org.mockito.Mock;
 import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.charter.retailer.reward.dto.TransactionDTO;
 import com.charter.retailer.reward.entities.TransactionEntity;
+import com.charter.retailer.reward.exception.TransactionNotFoundException;
 import com.charter.retailer.reward.repositories.TransactionRepository;
 
 @ExtendWith(MockitoExtension.class)
@@ -85,8 +84,8 @@ public class TransactionServiceTest {
         when(transactionRepository.findById(id)).thenReturn(Optional.empty());
 
         // Act and Assert
-        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> transactionService.getTransactionById(id));
-        assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
+        Throwable exception = assertThrows(Throwable.class, () -> transactionService.getTransactionById(id));
+        assertEquals(TransactionNotFoundException.class, exception.getClass());
     }
 
     @Test
