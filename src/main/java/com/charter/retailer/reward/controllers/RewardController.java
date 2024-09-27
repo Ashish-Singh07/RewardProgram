@@ -31,9 +31,9 @@ public class RewardController {
         return new ResponseEntity<>(rewardService.getRewardsBetweenDate(startDate, endDate), HttpStatus.OK);
     }
 
-    @GetMapping("/forLast/{n}/{entity}")
-    public ResponseEntity<Double> getRewardsForDays(@PathVariable int n, @PathVariable String entity) {
-        java.time.LocalDate startDate = switch (entity) {
+    @GetMapping("/forLast/{n}/{time}")
+    public ResponseEntity<Double> getRewardsForDays(@PathVariable int n, @PathVariable String time) {
+        java.time.LocalDate startDate = switch (time) {
                 case "day" -> java.time.LocalDate.now().minusDays(n);
                 case "week" -> java.time.LocalDate.now().minusWeeks(n);
                 case "month" -> java.time.LocalDate.now().minusMonths(n);
