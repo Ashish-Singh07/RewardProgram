@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
+import com.charter.retailer.reward.exception.InvalidDatesException;
 import com.charter.retailer.reward.services.RewardService;
 import static com.charter.retailer.reward.util.RewardConstants.INVALID_SEARCH_ENTITY_ERROR;
 
@@ -38,7 +38,7 @@ public class RewardController {
                 case "week" -> java.time.LocalDate.now().minusWeeks(n);
                 case "month" -> java.time.LocalDate.now().minusMonths(n);
                 case "year" -> java.time.LocalDate.now().minusYears(n);
-                default -> throw new ResponseStatusException(HttpStatus.BAD_REQUEST, INVALID_SEARCH_ENTITY_ERROR);
+                default -> throw new InvalidDatesException(INVALID_SEARCH_ENTITY_ERROR);
             };
         java.time.LocalDate endDate = java.time.LocalDate.now();
         return new ResponseEntity<>(rewardService.getRewardsBetweenDate(startDate, endDate), HttpStatus.OK);
